@@ -47,23 +47,22 @@ app.post('/api/register', (req, res) => {
 })
 
 app.post('/api/login', (req, res) => {
-    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
-    User.find({ email: req.body.email }).then(user => {
-        if(user){
-            bcrypt.compare(req.body.password, user[0].password, function(err, result) {
+    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    User.find({ email: req.body.email }).then(usr => {
+        if(usr){
+            bcrypt.compare(req.body.password, usr[0].password, function(err, result) {
                 if(result === true){
                     res.json({ outcome:"200" })
-                    mongoose.connection.close()
                 }
                 else{
                     res.json({ outcome:"401" })
-                    mongoose.connection.close()
                 }
             })
         }
         else{
             res.json({ outcome:"400" })
-            mongoose.connection.close()
         }
+    }).then(() => {
+        mongoose.connection.close()
     })
 })

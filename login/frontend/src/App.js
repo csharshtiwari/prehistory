@@ -14,13 +14,16 @@ function App() {
         password: password
     })
     .then(response => {
-        console.log(response.data.output)
+      if(response.data.outcome == 200){
+        alert("Authorized")
+      }
     })
   }
 
+  
   return (
     <Fragment>
-      <div className="loginpage">
+        <div className="loginpage">
         <div className="loginContainer">
             <h1>Login</h1>
             <form className="loginform" onSubmit={loginSubmit}>
@@ -28,12 +31,13 @@ function App() {
                     <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-                <button>Submit</button>
+                <button >Submit</button>
             </form>
         </div>
       </div>
     </Fragment>
   );
+  
 }
 
 export default App;
